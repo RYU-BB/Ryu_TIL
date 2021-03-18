@@ -30,11 +30,11 @@ def preprocess(text):
 
 def create_co_matrix(corpus, vocab_size, window_size=1):
     """
-
-    :param corpus:
-    :param vocab_size:
-    :param window_size:
-    :return:
+    문장 속 단어를 벡터로 표현
+    :param corpus: id로 표현된 문장
+    :param vocab_size: 어휘 수
+    :param window_size: 윈도우 크기
+    :return: 각 단어를 벡터로 표현된 co-matrix
     """
     corpus_size = len(corpus)
     co_matrix = np.zeros((vocab_size, vocab_size), dtype=np.int32)
@@ -52,7 +52,17 @@ def create_co_matrix(corpus, vocab_size, window_size=1):
                 right_word_id = corpus[right_idx]
                 co_matrix[word_id, right_word_id] += 1
 
-        return co_matrix
+    return co_matrix
 
 
-def
+def cos_similarity(x, y, eps=1e-8):
+    """
+    벡터간 유사도를 계산
+    :param x: numpy array
+    :param y: numpy array
+    :return: cosine 유사도
+    """
+    nx = x / (np.sqrt(np.sum(x**2)) + eps)
+    ny = y / (np.sqrt(np.sum(y**2)) + eps)
+    return np.dot(nx, ny)
+
