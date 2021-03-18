@@ -66,3 +66,62 @@ def cos_similarity(x, y, eps=1e-8):
     ny = y / (np.sqrt(np.sum(y**2)) + eps)
     return np.dot(nx, ny)
 
+
+def most_similar(query, word_to_id, id_to_word, word_matrix, top=5):
+    """
+    유사 단어의 랭킹 표시
+    :param query: 검색어(단어)
+    :param word_to_id: 단어에서 단어 ID로의 딕셔너리
+    :param id_to_word: 단어 ID에서 단어로의 딕셔너리
+    :param word_matrix: 단어 벡터들을 한데 모은 행렬. 각 행에는 대응하는 단어의 벡터가 저장되어있다고 가정
+    :param top: 상위 몇 개까지 출력할지 설정
+    :return: 유사도가 높은 순으로 출력
+    """
+    if query not in word_to_id:
+        print('%s(을)를 찾을 수 없습니다.' % query)
+        return
+    
+    print('\n[query] ' + query)
+    query_id = word_to_id[query]
+    query_vec = word_matrix[query_id]
+    
+    vocab_size = len(id_to_word)
+    similarity = np.zeros(vocab_size)
+    for i in range(vocab_size):
+        similarity[i] = cos_similarity(word_matrix[i], query_vec)
+        
+    count = 0
+    for i in (-1 * similarity).argsort():
+        if id_to_word[i] == query:
+            continue
+        print(' %s: %s' % (id_to_word[i], similarity[i]))
+        
+        count += 1
+        if count >= top:
+            return
+
+
+def ppmi(C, verbose=False, eps=1e-8):
+    """
+    PMI를 사용한 두 단어의 관련성
+    :param C: 동시발생행렬
+    :param verbose: 진행상황 출력 여부 flag
+    :return: PPMI
+    """
+    M = np.zeros_like(C, dtype=np.float32)
+    N = np.sum(C)
+    S = np.sum(C, axis=0)
+    total = C.shape[0] * C.shape[1]
+    cnt = 0
+
+    for i in range(C.shape[0]):
+        for j in range(C.shape[1]):
+            pmi = np.log2(C[i, j] * N / (S[j]*S[i]) + eps)
+            M[i, j] = max(0, pmi)
+
+            if verbose:
+                cnt += 1
+                if cnt % (total//100) == 0:
+                    print('%.1f%% 완료' % (100*cnt/total))
+
+    return M
