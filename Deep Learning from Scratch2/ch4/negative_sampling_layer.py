@@ -34,6 +34,7 @@ class NagativeSamplingLoss:
         self.embed_dot_layers = [EmbeddingDot(W) for _ in range(sample_size + 1)]
 
         self.params, self.grads = [], []
+
         for layer in self.embed_dot_layers:
             self.params += layer.params
             self.grads += layer.grads
