@@ -25,7 +25,7 @@ class EmbeddingDot:
         dh = dout * target_W
         return dh
 
-
+"""
 class NagativeSamplingLoss:
     def __init__(self, W, corpus, power=0.75, sample_size=5):
         self.sample_size = sample_size
@@ -39,3 +39,4 @@ class NagativeSamplingLoss:
             self.params += layer.params
             self.grads += layer.grads
 
+"""
