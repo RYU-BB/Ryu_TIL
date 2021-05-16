@@ -54,6 +54,7 @@ while True:
         thunder()
 
     elif menu_num == 3:
+
         break
 
     else:
