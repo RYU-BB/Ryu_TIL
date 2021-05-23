@@ -26,6 +26,7 @@ class EmbeddingDot:
         return dh
 
 """
+
 class NagativeSamplingLoss:
     def __init__(self, W, corpus, power=0.75, sample_size=5):
         self.sample_size = sample_size
