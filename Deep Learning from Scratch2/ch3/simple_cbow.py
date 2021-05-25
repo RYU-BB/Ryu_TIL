@@ -23,6 +23,7 @@ class SimpleCBOW:
             self.params += layer.params
             self.grads += layer.grads
 
+
         self.word_vecs = W_in
 
     def forward(self, contexts, target):
