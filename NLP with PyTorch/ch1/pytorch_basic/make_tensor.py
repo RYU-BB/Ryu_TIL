@@ -16,3 +16,24 @@ describe(x)
 x = torch.Tensor([[1, 2, 3],
                   [4, 5, 6]])
 describe(x)
+
+x = torch.Tensor([[1, 2, 3],
+                  [4, 5, 6]])
+describe(x)
+
+
+import numpy as np
+
+
+npy = np.random.rand(2, 3)
+describe(torch.from_numpy(npy))
+
+x = torch.FloatTensor([[1, 2, 3],
+                       [4, 5, 6]])
+
+x = x.long()
+
+x = torch.tensor([[1, 2, 3],
+                  [4, 5, 6]], dtype=torch.int64)
+
+x = x.float()
