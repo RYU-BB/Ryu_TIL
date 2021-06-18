@@ -1,4 +1,5 @@
 import torch
+import numpy as np
 
 
 def describe(x):
@@ -20,10 +21,6 @@ describe(x)
 x = torch.Tensor([[1, 2, 3],
                   [4, 5, 6]])
 describe(x)
-
-
-import numpy as np
-
 
 npy = np.random.rand(2, 3)
 describe(torch.from_numpy(npy))
