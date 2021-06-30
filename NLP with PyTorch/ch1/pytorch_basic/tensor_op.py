@@ -25,5 +25,3 @@ describe(torch.sum(x, dim=0))
 describe(torch.sum(x, dim=1))
 
 describe(torch.transpose(x, 0, 1))
-
-
